@@ -6,6 +6,8 @@ type UserRegisterResponse struct {
 	Id        int64     `json:"id"`
 	FullName  string    `json:"full_name"`
 	Email     string    `json:"email"`
+	Password  string    `json:"password"`
+	Balance   int64     `json:"balance"`
 	CreatedAt time.Time `json:"created_at"`
 }
 

@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: secret
-      POSTGRES_DB: kanban
+      POSTGRES_DB: toko_belanja
   go:
     build:
       context: . # Use an image built from the specified dockerfile in the current directory.

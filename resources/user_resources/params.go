@@ -16,6 +16,10 @@ type UserUpdateRequest struct {
 	Email    string `json:"email" validate:"required,email"`
 }
 
+type UserTopupBalanceRequest struct {
+	Balance int64 `json:"balance" validate:"required"`
+}
+
 type UserGenerateTokenParam struct {
 	Id       int64  `json:"id"`
 	Email    string `json:"email"`
@@ -27,6 +31,6 @@ type UserGenerateTokenParam struct {
 type Role string
 
 const (
-	RoleAdmin  Role = "admin"
-	RoleMember Role = "member"
+	RoleAdmin    Role = "admin"
+	RoleCustomer Role = "customer"
 )

@@ -1,6 +1,7 @@
 package user_controllers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"golang-final-project3-team2/resources/user_resources"
 	"golang-final-project3-team2/services/user_services"
@@ -43,6 +44,26 @@ func UserLogin(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, user)
+}
+
+func TopupBalance(c *gin.Context) {
+	var userReq user_resources.UserTopupBalanceRequest
+	userIdToken := c.MustGet("user_id").(string)
+
+	if err := c.ShouldBindJSON(&userReq); err != nil {
+		theErr := error_utils.NewUnprocessibleEntityError(err.Error())
+		c.JSON(theErr.Status(), theErr)
+		return
+	}
+
+	balance, err := user_services.UserService.UserTopup(userIdToken, &userReq)
+
+	if err != nil {
+		c.JSON(err.Status(), err)
+		return
+	}
+
+	c.JSON(http.StatusOK, success_utils.Success(fmt.Sprintf("Your balance has been successfully updated to Rp %d", balance)))
 }
 
 func UpdateUser(c *gin.Context) {

@@ -25,8 +25,9 @@ func StartRouter() {
 			userRouter.POST("/register", user_controllers.CreateUser)
 			userRouter.POST("/login", user_controllers.UserLogin)
 			userRouter.Use(middlewares.MiddlewareAuth())
-			userRouter.PUT("/update-account", user_controllers.UpdateUser)
-			userRouter.DELETE("/delete-account", user_controllers.DeleteUser)
+			userRouter.PATCH("/topup", user_controllers.TopupBalance)
+			//userRouter.PUT("/update-account", user_controllers.UpdateUser)
+			//userRouter.DELETE("/delete-account", user_controllers.DeleteUser)
 		}
 
 		categoryRouter := apiRouter.Group("/categories")

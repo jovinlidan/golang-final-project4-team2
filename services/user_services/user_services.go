@@ -13,6 +13,7 @@ type userServiceRepo interface {
 	UserRegister(*user_resources.UserRegisterRequest) (*user_resources.UserRegisterResponse, error_utils.MessageErr)
 	UserLogin(*user_resources.UserLoginRequest) (*user_resources.UserLoginResponse, error_utils.MessageErr)
 	UserUpdate(string, *user_resources.UserUpdateRequest) (*user_resources.UserUpdateResponse, error_utils.MessageErr)
+	UserTopup(string, *user_resources.UserTopupBalanceRequest) (int64, error_utils.MessageErr)
 	UserDelete(string) error_utils.MessageErr
 	GenerateAdminData() error_utils.MessageErr
 }
@@ -42,6 +43,8 @@ func (u *userService) UserRegister(userReq *user_resources.UserRegisterRequest) 
 		Id:        user.Id,
 		FullName:  user.FullName,
 		Email:     user.Email,
+		Password:  user.Password,
+		Balance:   user.Balance,
 		CreatedAt: user.CreatedAt,
 	}, nil
 }
@@ -96,6 +99,21 @@ func (u *userService) UserUpdate(id string, userReq *user_resources.UserUpdateRe
 		Email:     user.Email,
 		UpdatedAt: user.UpdatedAt,
 	}, nil
+}
+
+func (u *userService) UserTopup(id string, userReq *user_resources.UserTopupBalanceRequest) (int64, error_utils.MessageErr) {
+	err := helpers.ValidateRequest(userReq)
+
+	if err != nil {
+		return 0, err
+	}
+	balance, err := user_domain.UserDomain.UserTopupBalance(id, userReq)
+
+	if err != nil {
+		return balance, err
+	}
+
+	return balance, nil
 }
 
 func (u *userService) UserDelete(id string) error_utils.MessageErr {
