@@ -1,8 +1,8 @@
-# golang-final-project3-team2
+# golang-final-project4-team2
 
-Link Deploy API : https://golang-final-project3-team2-production.up.railway.app/
+Link Deploy API : https://golang-final-project4-team2-production.up.railway.app/
 
-Repository Team 2 Untuk Final Project 3 Golang (Kampus Merdeka Hacktiv8)
+Repository Team 2 Untuk Final Project 4 Golang (Kampus Merdeka Hacktiv8)
 
 Anggota Kelompok :
 
@@ -25,7 +25,7 @@ Anggota Kelompok :
 
 _Note : Memerlukan docker terinstall didalam perangkat anda_
 
-_Nama File Postman : `Kanban.postman_collection.json`_
+_Nama File Postman : `Toko_belanja.postman_collection.json`_
 
 ```json
 Akun Admin:
@@ -37,8 +37,7 @@ Password  : admin12
 ### Users
 - **`POST`- Users Register `api/users/register`**, Digunakan untuk membuat user baru.
 - **`POST`- Users Login `api/users/login`**, Digunakan untuk melakukan login atau autentikasi user.
-- **`PUT`- Users Update `api/users/update-account`**, Digunakan untuk mengubah data user berdasarkan idnya.
-- **`DELETE`- Users Delete `api/users/delete-account`**, Digunakan untuk menghapus data user.
+- **`PATCH`- Users Update `api/users/topup`**, Digunakan untuk menambahkan balance user.
 
 ### Categories
 - **`GET`- Categories Index `api/categories`**, Digunakan untuk mengambil seluruh data categories dari database.

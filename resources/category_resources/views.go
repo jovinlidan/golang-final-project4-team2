@@ -3,9 +3,10 @@ package category_resources
 import "time"
 
 type CategoryCreateResponse struct {
-	Id        int64     `json:"id"`
-	Type      string    `json:"type"`
-	CreatedAt time.Time `json:"created_at"`
+	Id                int64     `json:"id"`
+	Type              string    `json:"type"`
+	SoldProductAmount int64     `json:"sold_product_amount"`
+	CreatedAt         time.Time `json:"created_at"`
 }
 
 type CategoriesTaskGetResponse struct {
