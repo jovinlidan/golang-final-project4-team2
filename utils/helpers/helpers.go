@@ -5,8 +5,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"golang-final-project3-team2/resources/user_resources"
-	"golang-final-project3-team2/utils/error_utils"
+	"golang-final-project4-team2/resources/user_resources"
+	"golang-final-project4-team2/utils/error_utils"
 	"golang.org/x/crypto/bcrypt"
 
 	"os"

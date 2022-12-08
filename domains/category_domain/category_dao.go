@@ -1,27 +1,29 @@
 package category_domain
 
 import (
-	"golang-final-project3-team2/db"
-	"golang-final-project3-team2/resources/category_resources"
-	"golang-final-project3-team2/utils/error_formats"
-	"golang-final-project3-team2/utils/error_utils"
+	"golang-final-project4-team2/db"
+	"golang-final-project4-team2/resources/category_resources"
+	"golang-final-project4-team2/utils/error_formats"
+	"golang-final-project4-team2/utils/error_utils"
 )
 
 var CategoryDomain categoryDomainRepo = &categoryDomain{}
 
 const (
 	queryCreateCategory = `INSERT INTO categories (type) 
-	VALUES($1) RETURNING id,type, created_at`
+	VALUES($1) RETURNING id,type, sold_product_amount, created_at`
 
 	queryGetCategories = `
-	select c.id as c_id, type, c.updated_at as c_updated_at, c.created_at as c_created_at,
-	t.id as t_id, t.title , t.description, t.user_id, t.created_at as t_created_at, t.updated_at as t_updated_at
-	from categories c left join tasks t on c.id = t.category_id
+	select c.id as c_id, type, sold_product_amount, c.updated_at as c_updated_at, c.created_at as c_created_at,
+    p.id as p_id, p.title , p.price, p.stock, p.created_at as p_created_at, p.updated_at as p_updated_at
+	from categories c left join products p on c.id = p.category_id
 	ORDER BY c.id`
 
-	queryCategoryUpdate          = `UPDATE categories set updated_at = now(), type = $1 where id = $2 RETURNING id,type, updated_at`
-	queryDeleteTasksByCategoryId = `DELETE from tasks where category_id = $1`
-	queryDeleteCategory          = `DELETE from categories where id = $1`
+	queryCategoryUpdate = `UPDATE categories set updated_at = now(), type = $1 where id = $2 RETURNING id,type, updated_at`
+
+	queryDeleteTransactionHistoriesByCategoryId = `DELETE FROM transaction_histories where product_id in (select products.id from products inner join categories c on products.category_id = c.id where c.id = $1)`
+	queryDeleteProductsByCategoryId             = `DELETE FROM products where category_id = $1`
+	queryDeleteCategory                         = `DELETE from categories where id = $1`
 )
 
 type categoryDomainRepo interface {
@@ -43,7 +45,7 @@ func (u *categoryDomain) CreateCategory(req *category_resources.CategoryCreateRe
 
 	var category category_resources.CategoryCreateResponse
 
-	err := row.Scan(&category.Id, &category.Type, &category.CreatedAt)
+	err := row.Scan(&category.Id, &category.Type, &category.SoldProductAmount, &category.CreatedAt)
 
 	if err != nil {
 		return nil, error_formats.ParseError(err)
@@ -60,34 +62,33 @@ func (u *categoryDomain) GetCategories() (*[]category_resources.CategoriesGetRes
 	}
 
 	categories := make([]category_resources.CategoriesGetResponse, 0)
-	categoryTasks := make([]category_resources.CategoriesTaskGetResponse, 0)
+	categoryProducts := make([]category_resources.CategoriesProductGetResponse, 0)
 	var category category_resources.CategoriesGetResponse
 	var lastCategoryId int64 = -1
 
 	for rows.Next() {
-		var categoryTask category_resources.CategoriesTaskGetResponse
+		var categoryProduct category_resources.CategoriesProductGetResponse
 
 		// Scan Data
-		err = rows.Scan(&category.Id, &category.Type, &category.UpdatedAt, &category.CreatedAt, &categoryTask.Id, &categoryTask.Title, &categoryTask.Description, &categoryTask.UserId, &categoryTask.CreatedAt, &categoryTask.UpdatedAt)
+		err = rows.Scan(&category.Id, &category.Type, &category.SoldProductAmount, &category.UpdatedAt, &category.CreatedAt, &categoryProduct.Id, &categoryProduct.Title, &categoryProduct.Price, &categoryProduct.Stock, &categoryProduct.CreatedAt, &categoryProduct.UpdatedAt)
 
-		// Cek apakah ada task di category ini
-		if categoryTask.Id != nil {
+		// Cek apakah ada product di category ini
+		if categoryProduct.Id != nil {
 			var categoryId *int64
 			categoryId = new(int64)
 			*categoryId = category.Id
-			categoryTask.CategoryId = categoryId
-			categoryTasks = append(categoryTasks, categoryTask)
+			categoryProducts = append(categoryProducts, categoryProduct)
 		}
 
 		// Apabila category ini bukan category sebelumnya maka tambahkan kedalam array
 		if lastCategoryId != category.Id {
-			category.Tasks = categoryTasks
-			categoryTasks = make([]category_resources.CategoriesTaskGetResponse, 0)
+			category.Products = categoryProducts
+			categoryProducts = make([]category_resources.CategoriesProductGetResponse, 0)
 			categories = append(categories, category)
 		} else {
 			// Jika Iya maka update array task category terakhir
-			categories[len(categories)-1].Tasks = append(categories[len(categories)-1].Tasks, categoryTask)
-			categoryTasks = make([]category_resources.CategoriesTaskGetResponse, 0)
+			categories[len(categories)-1].Products = append(categories[len(categories)-1].Products, categoryProduct)
+			categoryProducts = make([]category_resources.CategoriesProductGetResponse, 0)
 		}
 
 		lastCategoryId = category.Id
@@ -135,7 +136,13 @@ func (u *categoryDomain) DeleteCategory(id string) (error error_utils.MessageErr
 		}
 	}()
 
-	rows, err := dbInstance.Query(queryDeleteTasksByCategoryId, id)
+	rows, err := dbInstance.Query(queryDeleteTransactionHistoriesByCategoryId, id)
+	if rows.Err() != nil {
+		return error_utils.NewBadRequest(err.Error())
+	}
+	rows.Close()
+
+	rows, err = dbInstance.Query(queryDeleteProductsByCategoryId, id)
 	if rows.Err() != nil {
 		return error_utils.NewBadRequest(err.Error())
 	}

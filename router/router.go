@@ -2,10 +2,11 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"golang-final-project3-team2/controllers/category_controllers"
-	"golang-final-project3-team2/controllers/user_controllers"
-	"golang-final-project3-team2/db"
-	"golang-final-project3-team2/middlewares"
+	"golang-final-project4-team2/controllers/category_controllers"
+	"golang-final-project4-team2/controllers/product_controllers"
+	"golang-final-project4-team2/controllers/user_controllers"
+	"golang-final-project4-team2/db"
+	"golang-final-project4-team2/middlewares"
 	"log"
 )
 
@@ -13,7 +14,6 @@ const PORT = ":8080"
 
 func init() {
 	db.InitializeDB()
-
 }
 
 func StartRouter() {
@@ -26,8 +26,6 @@ func StartRouter() {
 			userRouter.POST("/login", user_controllers.UserLogin)
 			userRouter.Use(middlewares.MiddlewareAuth())
 			userRouter.PATCH("/topup", user_controllers.TopupBalance)
-			//userRouter.PUT("/update-account", user_controllers.UpdateUser)
-			//userRouter.DELETE("/delete-account", user_controllers.DeleteUser)
 		}
 
 		categoryRouter := apiRouter.Group("/categories")
@@ -38,6 +36,17 @@ func StartRouter() {
 			categoryRouter.POST("/", category_controllers.CreateCategory)
 			categoryRouter.PATCH("/:categoryId", category_controllers.UpdateCategory)
 			categoryRouter.DELETE("/:categoryId", category_controllers.DeleteCategory)
+		}
+
+		productRouter := apiRouter.Group("/products")
+		{
+			productRouter.Use(middlewares.MiddlewareAuth())
+			productRouter.GET("/", product_controllers.GetProducts)
+			productRouter.Use(middlewares.MiddlewareOnlyAdmin())
+			productRouter.POST("/", product_controllers.CreateProduct)
+			productRouter.PUT("/:productId", product_controllers.UpdateProduct)
+			productRouter.DELETE("/:productId", product_controllers.DeleteProduct)
+
 		}
 	}
 

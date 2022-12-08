@@ -2,8 +2,8 @@ package db
 
 import (
 	"database/sql"
-	"golang-final-project3-team2/resources/user_resources"
-	"golang-final-project3-team2/utils/helpers"
+	"golang-final-project4-team2/resources/user_resources"
+	"golang-final-project4-team2/utils/helpers"
 	"log"
 )
 
@@ -11,6 +11,8 @@ func Migrations(db *sql.DB) {
 
 	createUsersTable(db)
 	createCategoriesTable(db)
+	createProductsTable(db)
+	createTransactionHistoriesTable(db)
 }
 
 func createUsersTable(db *sql.DB) {
@@ -63,7 +65,7 @@ func createCategoriesTable(db *sql.DB) {
 	CREATE TABLE IF NOT EXISTS categories (
 		id SERIAL PRIMARY KEY,
 		type VARCHAR(255) NOT NULL,
-		sold_product_amount INTEGER,
+		sold_product_amount INTEGER DEFAULT 0,
 		created_at timestamptz DEFAULT now(),
 		updated_at timestamptz DEFAULT now()
 	)
@@ -75,4 +77,45 @@ func createCategoriesTable(db *sql.DB) {
 	}
 	log.Println("success creating categories table")
 
+}
+
+func createProductsTable(db *sql.DB) {
+	createTable := `
+	CREATE TABLE IF NOT EXISTS products (
+		id SERIAL PRIMARY KEY,
+		title VARCHAR(255) NOT NULL,
+		price INTEGER CONSTRAINT price_constraint CHECK (price >= 0 and price <= 50000000) NOT NULL,
+		stock INTEGER CONSTRAINT stock_constraint CHECK (stock >= 5) NOT NULL,
+		category_id SERIAL references categories(id),
+		created_at timestamptz DEFAULT now(),
+		updated_at timestamptz DEFAULT now()
+	)
+	`
+	_, err = db.Exec(createTable)
+
+	if err != nil {
+		log.Fatal("Error creating products table:", err.Error())
+	}
+	log.Println("success creating products table")
+}
+
+func createTransactionHistoriesTable(db *sql.DB) {
+	createTable := `
+	CREATE TABLE IF NOT EXISTS transaction_histories
+	(
+		id          SERIAL PRIMARY KEY,
+		product_id  SERIAL references products (id),
+		user_id     SERIAL references users (id),
+		quantity    INTEGER NOT NULL,
+		total_price INTEGER NOT NULL,
+		created_at  timestamptz DEFAULT now(),
+		updated_at  timestamptz DEFAULT now()
+	)
+	`
+	_, err = db.Exec(createTable)
+
+	if err != nil {
+		log.Fatal("Error creating transaction histories table:", err.Error())
+	}
+	log.Println("success creating transaction histories table")
 }

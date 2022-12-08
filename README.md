@@ -11,9 +11,12 @@ Anggota Kelompok :
   - Setup Docker dan Init Project
   - Semua API User dan Postman user
   - Semua API Categories dan Postman categories
+  - Semua API Products dan Postman products
   - Setup deployment menggunakan railway
   - Helper : GenerateToken, VerifyToken, ValidateRequest, ComparePass, HashPass
   - Helper_test : TestSuccessGenerateToken, TestFailedGenerateToken, TestSuccessComparePass, TestFailedComparePass, TestSuccessHashPass, TestFailedHashPass
+  - Middleware auth dan Middleware only admin
+  - Setup create 4 tabel di migrations.go
 - GUSTIO NUSAMBA (GLNG-KS04-025)
   Mengerjakan :
 
@@ -44,3 +47,9 @@ Password  : admin12
 - **`POST`- Categories Store `api/categories`**, Digunakan untuk membuat category baru.
 - **`PATCH`- Categories Update `api/categories/:categoryId`**, Digunakan untuk mengubah data category berdasarkan idnya.
 - **`DELETE`- Categories Delete `api/categories/:categoryId`**, Digunakan untuk menghapus data category berdasarkan idnya.
+
+### Products
+- **`GET`- Products Index `api/products`**, Digunakan untuk mengambil seluruh data products dari database.
+- **`POST`- Products Store `api/products`**, Digunakan untuk membuat product baru.
+- **`PUT`- Products Update `api/products/:productId`**, Digunakan untuk mengubah data product berdasarkan idnya.
+- **`DELETE`- Products Delete `api/products/:productId`**, Digunakan untuk menghapus data product berdasarkan idnya.

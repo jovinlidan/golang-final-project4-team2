@@ -3,10 +3,10 @@ package user_controllers
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"golang-final-project3-team2/resources/user_resources"
-	"golang-final-project3-team2/services/user_services"
-	"golang-final-project3-team2/utils/error_utils"
-	"golang-final-project3-team2/utils/success_utils"
+	"golang-final-project4-team2/resources/user_resources"
+	"golang-final-project4-team2/services/user_services"
+	"golang-final-project4-team2/utils/error_utils"
+	"golang-final-project4-team2/utils/success_utils"
 	"net/http"
 )
 

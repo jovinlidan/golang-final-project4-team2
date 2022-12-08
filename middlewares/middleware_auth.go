@@ -4,10 +4,10 @@ import (
 	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"golang-final-project3-team2/domains/user_domain"
-	"golang-final-project3-team2/resources/user_resources"
-	"golang-final-project3-team2/utils/error_utils"
-	"golang-final-project3-team2/utils/helpers"
+	"golang-final-project4-team2/domains/user_domain"
+	"golang-final-project4-team2/resources/user_resources"
+	"golang-final-project4-team2/utils/error_utils"
+	"golang-final-project4-team2/utils/helpers"
 	"strconv"
 )
 

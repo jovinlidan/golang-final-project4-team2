@@ -1,7 +1,7 @@
 package main
 
 import (
-	"golang-final-project3-team2/router"
+	"golang-final-project4-team2/router"
 )
 
 func main() {

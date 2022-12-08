@@ -2,10 +2,10 @@ package category_controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"golang-final-project3-team2/resources/category_resources"
-	"golang-final-project3-team2/services/category_services"
-	"golang-final-project3-team2/utils/error_utils"
-	"golang-final-project3-team2/utils/success_utils"
+	"golang-final-project4-team2/resources/category_resources"
+	"golang-final-project4-team2/services/category_services"
+	"golang-final-project4-team2/utils/error_utils"
+	"golang-final-project4-team2/utils/success_utils"
 	"net/http"
 )
 

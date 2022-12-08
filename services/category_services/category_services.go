@@ -1,10 +1,10 @@
 package category_services
 
 import (
-	"golang-final-project3-team2/domains/category_domain"
-	"golang-final-project3-team2/resources/category_resources"
-	"golang-final-project3-team2/utils/error_utils"
-	"golang-final-project3-team2/utils/helpers"
+	"golang-final-project4-team2/domains/category_domain"
+	"golang-final-project4-team2/resources/category_resources"
+	"golang-final-project4-team2/utils/error_utils"
+	"golang-final-project4-team2/utils/helpers"
 )
 
 var CategoryService categoryServiceRepo = &categoryService{}

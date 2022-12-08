@@ -2,7 +2,7 @@ package helpers
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"golang-final-project3-team2/domains/user_domain"
+	"golang-final-project4-team2/domains/user_domain"
 	"golang.org/x/crypto/bcrypt"
 	"testing"
 )

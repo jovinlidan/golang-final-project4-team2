@@ -1,10 +1,10 @@
 package user_domain
 
 import (
-	"golang-final-project3-team2/db"
-	"golang-final-project3-team2/resources/user_resources"
-	"golang-final-project3-team2/utils/error_formats"
-	"golang-final-project3-team2/utils/error_utils"
+	"golang-final-project4-team2/db"
+	"golang-final-project4-team2/resources/user_resources"
+	"golang-final-project4-team2/utils/error_formats"
+	"golang-final-project4-team2/utils/error_utils"
 )
 
 var UserDomain userDomainRepo = &userDomain{}
