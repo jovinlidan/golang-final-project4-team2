@@ -19,6 +19,7 @@ Anggota Kelompok :
   - Setup create 4 tabel di migrations.go
 - GUSTIO NUSAMBA (GLNG-KS04-025)
   Mengerjakan :
+  - Semua API Transaction History dan Postman transaction history
 
 ## Cara Install
 
@@ -53,3 +54,8 @@ Password  : admin12
 - **`POST`- Products Store `api/products`**, Digunakan untuk membuat product baru.
 - **`PUT`- Products Update `api/products/:productId`**, Digunakan untuk mengubah data product berdasarkan idnya.
 - **`DELETE`- Products Delete `api/products/:productId`**, Digunakan untuk menghapus data product berdasarkan idnya.
+
+### Transaction History
+- **`GET`-Transaction History User `api/transaction/my-transactions`**, Berguna untuk user yang sedang login mendapatkan data-data transaksi pembeliannya.
+- **`POST`-Transaction History Store `api/transaction`**, Digunakan untuk membuat transaction history baru.
+- **`GET`-Transaction History Admin `api/transaction/user-transactions`**, Berguna untuk admin melihat seluruh data transaksi pembelian product oleh user.
