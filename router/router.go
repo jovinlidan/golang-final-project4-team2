@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang-final-project4-team2/controllers/category_controllers"
 	"golang-final-project4-team2/controllers/product_controllers"
+	"golang-final-project4-team2/controllers/transaction_controllers"
 	"golang-final-project4-team2/controllers/user_controllers"
 	"golang-final-project4-team2/db"
 	"golang-final-project4-team2/middlewares"
@@ -46,6 +47,15 @@ func StartRouter() {
 			productRouter.POST("/", product_controllers.CreateProduct)
 			productRouter.PUT("/:productId", product_controllers.UpdateProduct)
 			productRouter.DELETE("/:productId", product_controllers.DeleteProduct)
+
+		}
+
+		transactionRouter := apiRouter.Group("/transactions")
+		{
+			transactionRouter.Use(middlewares.MiddlewareAuth())
+			transactionRouter.GET("/my-transactions", transaction_controllers.GetMyTransactions)
+			transactionRouter.GET("/user-transactions", transaction_controllers.GetUserTransactions)
+			transactionRouter.POST("/transactions", transaction_controllers.CreateTransaction)
 
 		}
 	}
