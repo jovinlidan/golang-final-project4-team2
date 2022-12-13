@@ -11,9 +11,9 @@ import (
 var TransactionService transactionServiceRepo = &transactionService{}
 
 type transactionServiceRepo interface {
-	CreateTransaction(*transaction_resources.TransactionCreateRequest, string) (*transaction_resources.TransactionCreateResponse, error_utils.MessageErr)
-	GetMyTransactions(string) (*[]transaction_resources.TransactionGetMyTransactionResponse, error_utils.MessageErr)
-	GetUserTransactions(string) (*[]transaction_resources.TransactionGetUserTransactionsResponse, error_utils.MessageErr)
+	CreateTransaction(*transaction_resources.TransactionCreateRequest) (*transaction_resources.TransactionCreateResponse, error_utils.MessageErr)
+	GetMyTransactions() (*[]transaction_resources.TransactionGetMyTransactionResponse, error_utils.MessageErr)
+	GetUserTransactions() (*[]transaction_resources.TransactionGetUserTransactionsResponse, error_utils.MessageErr)
 }
 
 type transactionService struct{}
