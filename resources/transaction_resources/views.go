@@ -14,7 +14,7 @@ type TransactionUserGetResponse struct {
 	FullName  string    `json:"full_name"`
 	Balance   int64     `json:"balance"`
 	CreatedAt time.Time `json:"created_at"`
-	UpdateAt  time.Time `json:"updated_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type TransactionProductGetResponse struct {
@@ -30,7 +30,7 @@ type TransactionProductGetResponse struct {
 type TransactionGetMyTransactionResponse struct {
 	Id         int64                           `json:"id"`
 	ProductId  int64                           `json:"product_id"`
-	UserID     int64                           `json:"user_id"`
+	UserId     int64                           `json:"user_id"`
 	Quantity   int64                           `json:"quantity"`
 	TotalPrice int64                           `json:"total_price"`
 	Products   []TransactionProductGetResponse `json:"products"`
@@ -39,7 +39,7 @@ type TransactionGetMyTransactionResponse struct {
 type TransactionGetUserTransactionsResponse struct {
 	Id         int64                           `json:"id"`
 	ProductId  int64                           `json:"product_id"`
-	UserID     int64                           `json:"user_id"`
+	UserId     int64                           `json:"user_id"`
 	Quantity   int64                           `json:"quantity"`
 	TotalPrice int64                           `json:"total_price"`
 	Products   []TransactionProductGetResponse `json:"products"`
